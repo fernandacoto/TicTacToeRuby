@@ -108,9 +108,11 @@
         avance_soluciones = indice_en_soluciones + 1
         while avance_soluciones < largoreal(arreglo_jugador) && @solucion_parcial == false
           if @soluciones[indice_en_soluciones][1] == arreglo_jugador[avance_soluciones]
+             puts "SOLUCIONES segunda posicion #{@soluciones[indice_arreglo_soluciones][1]} == JUGADOR #{arreglo_jugador[@indicador]}"
              primeracol_tercer_acierto_coltres(indice_en_soluciones,avance_soluciones,arreglo_jugador)
           end
           if @soluciones[indice_en_soluciones][2] == arreglo_jugador[avance_soluciones]
+             puts "SSOLUCIONES segunda posicion #{@soluciones[indice_arreglo_soluciones][2]} == JUGADOR #{arreglo_jugador[@indicador]}"
              primeracol_tercer_acierto_coldos(indice_en_soluciones,avance_soluciones,arreglo_jugador)
           end
           avance_soluciones += 1
