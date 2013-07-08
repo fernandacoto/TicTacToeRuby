@@ -25,8 +25,18 @@ class Logica_Computadora
     $fila = 0
     $columna = 0
     $movimientos = movimientos
-    encontrar_fila_vacia(arreglo)
+    verificar_posibilidad_gane_usuario(tablero)
     return $movida
+  end
+
+  def verificar_posibilidad_gane_usuario(tablero)
+    $simbolo = "O"
+    $solucion = buscar_opciones_gane_usuario(tablero) # falta implementar
+    if $solucion
+      return $movida
+    else
+      encontrar_fila_vacia(arreglo)
+    end
   end
 
   def encontrar_fila_vacia(arreglo)
