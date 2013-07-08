@@ -21,23 +21,69 @@ class Logica_Computadora
     $movida.each {|x| print"ELEMENTO #{x}\n"}
   end
 
-  def movida_computadora(arreglo, movimientos)
+  def movida_computadora(arreglo, cantidad_casillas_ocupadas)
     $fila = 0
     $columna = 0
-    $movimientos = movimientos
+    $movimientos = cantidad_casillas_ocupadas # cambiar movimientos por casillas_ocupadas
     verificar_posibilidad_gane_usuario(tablero)
     return $movida
   end
 
   def verificar_posibilidad_gane_usuario(tablero)
     $simbolo = "O"
-    $solucion = buscar_opciones_gane_usuario(tablero) # falta implementar
+    $solucion = buscar_opciones_gane_usuario(tablero)
     if $solucion
       return $movida
     else
-      encontrar_fila_vacia(arreglo)
+      encontrar_fila_vacia(tablero)
     end
   end
+
+  def buscar_opciones_gane_usuario(tablero)
+    iteraciones = repetir_busqueda_solucion
+    iteraciones.times {encontrar_fila(tablero) revisar_tablero_usuario(tablero)}
+    return $solucion
+  end
+
+  def repetir_busqueda_solucion
+    cantidad_casillas_ocupadas = $movimientos % 2
+    if cantidad_casillas_ocupadas.even?
+      return cantidad_casillas_ocupadas
+    else
+      return (($movimientos - 1) / 2) + 1
+    end
+  end
+
+  def revisar_tablero_usuario(tablero)
+    chequear_filas(tablero)
+    chequear_columnas(tablero)
+    # agregar caso especial 
+  end
+
+  def chequear_filas(arreglo)
+    if $fila == 0
+      puede_ganar_usuario(arreglo,$fila + 1, $columna, $fila + 2, $columna)
+    end
+    if $fila == 1
+      puede_ganar_usuario(arreglo,$fila + 1, $columna, $fila - 1, $columna)
+    end
+    if $fila == 2
+      puede_ganar_usuario(arreglo,$fila - 1, $columna, $fila - 2, $columna)
+    end
+  end
+
+  def chequear_columnas(arreglo)
+    if $columna == 0
+      puede_ganar_usuario(arreglo,$fila,$columna + 1, $fila,$columna + 2)
+    end
+    if $columna == 1
+      puede_ganar_usuario(arreglo,$fila,$columna + 1, $fila,$columna - 1)
+    end
+    if $columna == 2
+      puede_ganar_usuario(arreglo,$fila,$columna - 1, $fila,$columna - 2)
+    end
+  end
+
 
   def encontrar_fila_vacia(arreglo)
     $simbolo_encontrado = false
@@ -80,9 +126,9 @@ class Logica_Computadora
 
   def proximo_movimiento(arreglo)
     $iteraciones_de_busqueda = $movimientos / 2
-    $iteraciones_de_busqueda.times {encontrar_fila(arreglo)}
+    $iteraciones_de_busqueda.times {encontrar_fila(arreglo) posible_jugada(arreglo) }
   end
-
+i
   def encontrar_fila(arreglo)
     $simbolo_encontrado = false
     while $simbolo_encontrado == false && $fila < 3
@@ -92,7 +138,7 @@ class Logica_Computadora
         $columna = 0
       end
     end
-    posible_jugada(arreglo)
+    #posible_jugada(arreglo)
   end
 
   def encontrar_columna(arreglo)
