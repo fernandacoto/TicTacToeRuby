@@ -16,32 +16,48 @@ class Logica_Computadora
   end
 
   def prueba
-    array = [["O","X","X"],["O","X"," "],[" "," "," "]]
-    movida_computadora(array,5)
+    array = [["O"," ","X"],[" ","X"," "],[" "," "," "]]
+    movida_computadora(array,3)
     $movida.each {|x| print"ELEMENTO #{x}\n"}
   end
 
-  def movida_computadora(arreglo, cantidad_casillas_ocupadas)
+  def movida_computadora(tablero, cantidad_casillas_ocupadas)
     $fila = 0
     $columna = 0
     $movimientos = cantidad_casillas_ocupadas # cambiar movimientos por casillas_ocupadas
-    verificar_posibilidad_gane_usuario(tablero)
+    if $movimientos < 3
+      encontrar_fila_vacia(tablero)
+    else
+      verificar_posibilidad_gane_usuario(tablero)
+    end
     return $movida
   end
 
   def verificar_posibilidad_gane_usuario(tablero)
-    $simbolo = "O"
+    $simbolo = "X"
+    $solucion = false
     $solucion = buscar_opciones_gane_usuario(tablero)
-    if $solucion
+    if $solucion == true
       return $movida
     else
       encontrar_fila_vacia(tablero)
     end
+    chequear_movimiento_acertado(tablero)
+  end
+
+  def chequear_movimiento_acertado(tablero)
+    if $solucion == false
+      primer_movimiento(tablero)
+    end
+
   end
 
   def buscar_opciones_gane_usuario(tablero)
     iteraciones = repetir_busqueda_solucion
-    iteraciones.times {encontrar_fila(tablero) revisar_tablero_usuario(tablero)}
+    iteraciones.times do
+      encontrar_fila(tablero)
+      revisar_tablero_usuario(tablero)
+    end
     return $solucion
   end
 
@@ -55,37 +71,22 @@ class Logica_Computadora
   end
 
   def revisar_tablero_usuario(tablero)
-    chequear_filas(tablero)
-    chequear_columnas(tablero)
-    # agregar caso especial 
+    revisar_filas(tablero)
+    revisar_columnas(tablero)
+    revisar_diagonales(tablero)
   end
 
-  def chequear_filas(arreglo)
-    if $fila == 0
-      puede_ganar_usuario(arreglo,$fila + 1, $columna, $fila + 2, $columna)
-    end
-    if $fila == 1
-      puede_ganar_usuario(arreglo,$fila + 1, $columna, $fila - 1, $columna)
-    end
-    if $fila == 2
-      puede_ganar_usuario(arreglo,$fila - 1, $columna, $fila - 2, $columna)
+  def revisar_diagonales(tablero)
+    if $solucion == false && tablero[1][1] = $simbolo
+      $fila = 1
+      $columna = 1
+      comparacion(tablero,$fila - 1,$columna - 1,$fila + 1,$columna + 1)
+      comparacion(tablero,$fila - 1,$columna + 1,$fila + 1,$columna - 1)
     end
   end
-
-  def chequear_columnas(arreglo)
-    if $columna == 0
-      puede_ganar_usuario(arreglo,$fila,$columna + 1, $fila,$columna + 2)
-    end
-    if $columna == 1
-      puede_ganar_usuario(arreglo,$fila,$columna + 1, $fila,$columna - 1)
-    end
-    if $columna == 2
-      puede_ganar_usuario(arreglo,$fila,$columna - 1, $fila,$columna - 2)
-    end
-  end
-
 
   def encontrar_fila_vacia(arreglo)
+    $simbolo = " "
     $simbolo_encontrado = false
     if $movimientos < 2
       primer_movimiento(arreglo)
@@ -103,7 +104,7 @@ class Logica_Computadora
   end
 
   def buscar_movida(arreglo)
-    while $simbolo_enocntrado == false && fila < 3
+    while $simbolo_encontrado == false && $fila < 3
       buscar_columna_vacia(arreglo)
       if $simbolo_encontrado == false
         $fila += 1
@@ -126,9 +127,12 @@ class Logica_Computadora
 
   def proximo_movimiento(arreglo)
     $iteraciones_de_busqueda = $movimientos / 2
-    $iteraciones_de_busqueda.times {encontrar_fila(arreglo) posible_jugada(arreglo) }
+    $iteraciones_de_busqueda.times do
+      encontrar_fila(arreglo)
+      posible_jugada(arreglo)
+    end
   end
-i
+  
   def encontrar_fila(arreglo)
     $simbolo_encontrado = false
     while $simbolo_encontrado == false && $fila < 3
@@ -247,14 +251,18 @@ i
         $solucion = true
         $movida.push(fila2)
         $movida.push(columna2)
-      end
-      if arreglo[fila1][columna1] == " " && arreglo[fila2][columna2] == $simbolo
+      else 
+        if arreglo[fila1][columna1] == " " && arreglo[fila2][columna2] == $simbolo
         $solucion = true
         $movida.push(fila1)
         $movida.push(columna1)
+        else 
+          $solucion = false
+        end
       end
     end
+    return $solucion
   end
 end
-#pru = Logica_Computadora.new()
-#pru.prueba
+pru = Logica_Computadora.new()
+pru.prueba
