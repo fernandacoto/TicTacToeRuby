@@ -17,7 +17,7 @@ class Logica_Computadora
 
   def prueba
     array = [["O"," ","X"],[" ","X"," "],[" "," "," "]]
-    movida_computadora(array,3)
+    movida_computadora(array,5)
     $movida.each {|x| print"ELEMENTO #{x}\n"}
   end
 
@@ -27,6 +27,17 @@ class Logica_Computadora
     $movimientos = cantidad_casillas_ocupadas # cambiar movimientos por casillas_ocupadas
     if $movimientos < 3
       encontrar_fila_vacia(tablero)
+    else
+      elegir_jugada(tablero)
+      #verificar_posibilidad_gane_usuario(tablero)
+    end
+    return $movida
+  end
+
+  def elegir_jugada(tablero)
+    encontrar_fila_vacia(tablero)
+    if $solucion 
+      return $movida
     else
       verificar_posibilidad_gane_usuario(tablero)
     end
@@ -126,9 +137,11 @@ class Logica_Computadora
   end
 
   def proximo_movimiento(arreglo)
+    $simbolo = "O"
     $iteraciones_de_busqueda = $movimientos / 2
     $iteraciones_de_busqueda.times do
       encontrar_fila(arreglo)
+      #print "\n fila #{$fila} +++ col #{$columna} \n"
       posible_jugada(arreglo)
     end
   end
@@ -203,8 +216,8 @@ class Logica_Computadora
     if $solucion == false
       if arreglo[fila1][columna1] == " " && arreglo[fila2][columna2] == " "
         $solucion = true
-        $movida.push(fila1)
-        $movida.push(columna1)
+        $movida[0]=fila1
+        $movida[1]=columna1
       end
     end
   end
@@ -249,13 +262,13 @@ class Logica_Computadora
     if $solucion == false
       if arreglo[fila1][columna1] == $simbolo && arreglo[fila2][columna2] == " "
         $solucion = true
-        $movida.push(fila2)
-        $movida.push(columna2)
+        $movida[0]=fila2
+        $movida[1]=columna2
       else 
         if arreglo[fila1][columna1] == " " && arreglo[fila2][columna2] == $simbolo
         $solucion = true
-        $movida.push(fila1)
-        $movida.push(columna1)
+        $movida[0]=fila1
+        $movida[1]=columna1
         else 
           $solucion = false
         end
