@@ -1,3 +1,0 @@
-class menu
-
-end
