@@ -25,6 +25,8 @@ class Console_Output
       validar_columna
       validar_disponibilidad
       jugada
+      $ganador = $busca_ganador.ganador(@gato,@jugador,$movimientos)
+      hay_ganador
       $movimientos +=1
     end
   end
@@ -127,5 +129,5 @@ class Console_Output
 end
 
 pinta = Console_Output.new()
-#pinta.partida_usuarios
-pinta.partida_computadora_usuario
+pinta.partida_usuarios
+#pinta.partida_computadora_usuario
