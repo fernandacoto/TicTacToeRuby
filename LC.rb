@@ -19,8 +19,10 @@ class Logica_Computadora
     #array = [["O"," ","X"],[" ","X"," "],[" "," "," "]]
     #array = [["X"," "," "],[" "," "," "],[" "," "," "]]
     #array = [["X","O","X"],[" ","O"," "],[" "," ","X"]]
-     array = [["X","O","X"],[" ","O"," "],[" ","X"," "]]
-    movida_computadora(array,5)
+    #array = [["X","O","X"],[" ","O"," "],[" ","X"," "]]
+    #array = [["X","X"," "],[" ","O"," "],[" "," "," "]]
+    array = [[" "," "," "],[" ","X"," "],[" "," "," "]]
+    movida_computadora(array,1)
     $movida.each {|x| print"ELEMENTO #{x}\n"}
   end
 
@@ -129,10 +131,11 @@ class Logica_Computadora
   end
 
   def buscar_columna_vacia(arreglo)
+     $simbolo = " "
      while $simbolo_encontrado == false && $columna < 3
        if arreglo[$fila][$columna] == $simbolo
-         $movida.push($fila)
-         $movida.push($columna)
+         $movida[0] = $fila
+         $movida[1] = $columna
          $simbolo_encontrado = true
        else
          $columna += 1
@@ -170,28 +173,8 @@ class Logica_Computadora
     end
   end
 
-  #def posible_jugada(arreglo)
-  #  if (($iteraciones_de_busqueda * 2) + 1) == 3
-  #    segundo_movimiento(arreglo)
-  #  else
-  #    posibilidad_de_ganar(arreglo)
-  #  end
-  #end
-
-  #def segundo_movimiento(arreglo)
-  #  $solucion = false
-  #  revisar_filas_vacias(arreglo)
-  #  revisar_columnas_vacias(arreglo)
-  #  if $solucion == false && arreglo[1][1] = $simbolo
-  #    $fila = 1
-  #    $columna = 1
-  #    eleccion(arreglo,$fila - 1,$columna - 1,$fila + 1,$columna + 1)
-  #    eleccion(arreglo,$fila - 1,$columna + 1,$fila + 1,$columna - 1)
-  #  end
-  #end
-
   def revisar_filas_vacias(arreglo)
-    $simbolo= " "
+    #$simbolo= " "
     if $fila == 0
       eleccion(arreglo,$fila + 1, $columna, $fila + 2, $columna)
     end
@@ -216,8 +199,6 @@ class Logica_Computadora
   end
 
   def eleccion(arreglo,fila1,columna1,fila2,columna2)
-    print "EN ELECCION\n"
-    print "arreglo[fila1][columna1] [#{arreglo[fila1][columna1]}] == " " && arreglo[fila2][columna2][#arreglo[fila2][columna2]] == " " \n\n"
     if $solucion == false
       if arreglo[fila1][columna1] == " " && arreglo[fila2][columna2] == " "
         $solucion = true
@@ -264,7 +245,7 @@ class Logica_Computadora
   end
 
   def comparacion(arreglo,fila1,columna1,fila2,columna2)
-    if $solucion == false
+    if $solucion == false && fila1 < 3 && fila2 < 3
       if arreglo[fila1][columna1] == $simbolo && arreglo[fila2][columna2] == " "
         $solucion = true
         $movida[0]=fila2
@@ -282,5 +263,5 @@ class Logica_Computadora
     return $solucion
   end
 end
-pru = Logica_Computadora.new()
-pru.prueba
+#pru = Logica_Computadora.new()
+#pru.prueba
