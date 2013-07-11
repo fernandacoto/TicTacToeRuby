@@ -40,6 +40,7 @@ class Logica_Ganador
       $simbolo = "O"
     end
     iteraciones_de_busqueda(arreglo)
+    print $solucion
     if $solucion == true # extraer en metodo aparte
       return $solucion
     else
