@@ -25,8 +25,8 @@ class Console_Output
       validar_columna
       validar_disponibilidad
       jugada
-      $ganador = $busca_ganador.ganador(@gato,@jugador,$movimientos)
-      hay_ganador
+      #$ganador = $busca_ganador.ganador(@gato,@jugador,$movimientos)
+      #hay_ganador
       $movimientos +=1
     end
   end
@@ -98,13 +98,17 @@ class Console_Output
   def jugada # cambiar jugador por "string"
     if @jugador == 1
       @gato[$fila][$columna] = "X"
+      $ganador = $busca_ganador.ganador(@gato,@jugador,$movimientos)
+      hay_ganador
       @jugador = 2
     else
       @gato[$fila][$columna] = "O"
+      $ganador = $busca_ganador.ganador(@gato,@jugador,$movimientos)
+      hay_ganador
       @jugador = 1
     end
-    $ganador = $busca_ganador.ganador(@gato,@jugador,$movimientos)
-    hay_ganador
+    #$ganador = $busca_ganador.ganador(@gato,@jugador,$movimientos)
+    #hay_ganador
     pintar_gato
   end
 
