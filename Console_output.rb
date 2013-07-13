@@ -60,7 +60,7 @@ class Console_Output
       print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
       hacer_validaciones
       selecionar_jugador
-      $existe_ganador = $instancia_logica_ganador.ganador(@tablero,@jugador,$numero_casillas_ocupadas)
+      $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
       chequear_ganador
       $numero_casillas_ocupadas +=1
     end
@@ -92,7 +92,7 @@ class Console_Output
     print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
       hacer_validaciones
       @tablero[$fila][$columna] = "X"
-      $existe_ganador = $instancia_logica_ganador.ganador(@tablero,@jugador,$numero_casillas_ocupadas)
+      $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
       chequear_ganador
       @jugador = 2
   end
