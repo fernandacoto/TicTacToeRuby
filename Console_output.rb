@@ -64,6 +64,7 @@ class Console_Output
       chequear_ganador
       $numero_casillas_ocupadas +=1
     end
+    hacer_menu
   end
 
   def hacer_validaciones
@@ -84,6 +85,7 @@ class Console_Output
       end
       $numero_casillas_ocupadas +=1
     end
+    hacer_menu
   end
 
   def realizar_movida_usuario
@@ -155,7 +157,7 @@ class Console_Output
     end
   end
 
-  def pintar_tablero
+  def pintar_tablero 
     print " #{@tablero[0][0]} | #{@tablero[0][1]} | #{@tablero[0][2]}\n"
     print "------------\n"
     print " #{@tablero[1][0]} | #{@tablero[1][1]} | #{@tablero[1][2]}\n"
