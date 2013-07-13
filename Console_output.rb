@@ -81,45 +81,18 @@ class Console_Output
     hacer_menu
   end
 
+  def pintar_tablero #falta modificar
+    print " #{@tablero[0][0]} | #{@tablero[0][1]} | #{@tablero[0][2]}\n"
+    print "------------\n"
+    print " #{@tablero[1][0]} | #{@tablero[1][1]} | #{@tablero[1][2]}\n"
+    print "------------\n"
+    print " #{@tablero[2][0]} | #{@tablero[2][1]} | #{@tablero[2][2]}\n"
+  end
+
   def hacer_validaciones
     validar_entrada("fila ")
     validar_entrada("columna ")
     validar_disponibilidad
-  end
-
-  def iniciar_partida_computadora_usuario
-    $numero_casillas_ocupadas = 0
-    $existe_ganador = false
-    pintar_tablero
-    while $numero_casillas_ocupadas < $cantidad_maxima_movidas && $existe_ganador == false
-      if @jugador == 1
-        realizar_movida_usuario
-      else
-        realizar_movida_computadora
-      end
-      $numero_casillas_ocupadas +=1
-    end
-    hacer_menu
-  end
-
-  def realizar_movida_usuario
-    print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
-      hacer_validaciones
-      @tablero[$fila][$columna] = "X"
-      $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
-      chequear_ganador
-      @jugador = 2
-  end
-
-  def realizar_movida_computadora
-    $instancia_logica_computadora = Logica_Computadora.new()
-    arreglo_resultado = Array.new()
-    arreglo_resultado = $instancia_logica_computadora.iniciar_movida_computadora(@tablero,$numero_casillas_ocupadas)
-    @tablero[arreglo_resultado[0]][arreglo_resultado[1]] = "O"
-    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
-    chequear_ganador
-    @jugador = 1
-    pintar_tablero
   end
 
   def validar_entrada(argumento)
@@ -171,13 +144,41 @@ class Console_Output
     end
   end
 
-  def pintar_tablero #falta modificar
-    print " #{@tablero[0][0]} | #{@tablero[0][1]} | #{@tablero[0][2]}\n"
-    print "------------\n"
-    print " #{@tablero[1][0]} | #{@tablero[1][1]} | #{@tablero[1][2]}\n"
-    print "------------\n"
-    print " #{@tablero[2][0]} | #{@tablero[2][1]} | #{@tablero[2][2]}\n"
+  def iniciar_partida_computadora_usuario
+    $numero_casillas_ocupadas = 0
+    $existe_ganador = false
+    pintar_tablero
+    while $numero_casillas_ocupadas < $cantidad_maxima_movidas && $existe_ganador == false
+      if @jugador == 1
+        realizar_movida_usuario
+      else
+        realizar_movida_computadora
+      end
+      $numero_casillas_ocupadas +=1
+    end
+    hacer_menu
   end
+
+  def realizar_movida_usuario
+    print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
+      hacer_validaciones
+      @tablero[$fila][$columna] = "X"
+      $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
+      chequear_ganador
+      @jugador = 2
+  end
+
+  def realizar_movida_computadora
+    $instancia_logica_computadora = Logica_Computadora.new()
+    arreglo_resultado = Array.new()
+    arreglo_resultado = $instancia_logica_computadora.iniciar_movida_computadora(@tablero,$numero_casillas_ocupadas)
+    @tablero[arreglo_resultado[0]][arreglo_resultado[1]] = "O"
+    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
+    chequear_ganador
+    @jugador = 1
+    pintar_tablero
+  end
+
 end
 jugar = Console_Output.new()
 #jugar.iniciar_partida_usuario

@@ -42,14 +42,6 @@ class Logica_Ganador
     end
   end
 
-  def revisar_solucion
-    if $solucion_encontrada == true 
-      return $solucion_encontrada
-    else
-      return false
-    end
-  end
-
   def encontrar_fila(tablero)
     $simbolo_encontrado = false
     while $simbolo_encontrado == false && $fila < 3
@@ -116,4 +108,13 @@ class Logica_Ganador
     end
    return $solucion_encontrada
   end
+
+  def revisar_solucion
+    if $solucion_encontrada == true 
+      return $solucion_encontrada
+    else
+      return false
+    end
+  end
+
 end
