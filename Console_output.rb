@@ -52,6 +52,19 @@ class Console_Output
       end
     end
   end
+
+  def mostrar_instrucciones
+    print "Para jugar debe de digitar el numero de la fila y columna en la cual desea jugar\n"
+    print "0 0 | 0 1 | 0 2 \n"
+    print "--------------- \n"
+    print "1 0 | 1 1 | 1 2 \n"
+    print "--------------- \n"
+    print "2 0 | 2 1 | 2 2 \n"
+    print "Por ejemplo para seleccionar la casilla central, cuando se me pide la fila digito 1 y cuando es la columna digito 1 \n"
+    print "Presione cualquier tecla para continuar \n"
+    gets 
+    hacer_menu
+  end
   
   def iniciar_partida_usuario 
     $numero_casillas_ocupadas = 0
@@ -136,7 +149,7 @@ class Console_Output
     end
   end
 
-  def selecionar_jugador
+  def selecionar_jugador #falta modificar
     if @jugador == $primer_jugador
       @tablero[$fila][$columna] = "X"
       @jugador = $segundo_jugador
@@ -158,7 +171,7 @@ class Console_Output
     end
   end
 
-  def pintar_tablero 
+  def pintar_tablero #falta modificar
     print " #{@tablero[0][0]} | #{@tablero[0][1]} | #{@tablero[0][2]}\n"
     print "------------\n"
     print " #{@tablero[1][0]} | #{@tablero[1][1]} | #{@tablero[1][2]}\n"
