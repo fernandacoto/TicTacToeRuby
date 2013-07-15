@@ -13,6 +13,13 @@ class Logica_Ganador
     $primer_jugador = 1
   end
 
+  def prueba
+  #  #arr= [["X","O","O"],["O","O","X"],["X","X","X"]]
+    arr= [["X","O","O"],["O","O","X"],["X","X","X"]]
+    iniciar_buscar_ganador(arr,1,4)
+    print $solucion_encontrada
+  end
+
   def iniciar_buscar_ganador(tablero,jugador,movidas)
     $cantidad_movidas = movidas
     $fila = 0
@@ -32,12 +39,32 @@ class Logica_Ganador
 
   def iteraciones_de_busqueda(tablero)
     $solucion_encontrada = false
-    repeticiones_de_busqueda = $cantidad_movidas % 2
-    if !repeticiones_de_busqueda.even?
-      repeticiones_de_busqueda = (($cantidad_movidas - 1)/2) + 1
+    $simbolo_encontrado = false
+    encontrar_columna(tablero)
+    revisar_tablero(tablero)
+    if revisar_solucion == false
+      $simbolo_encontrado = false
+      $fila = 1
+      $columna = 0
+      encontrar_columna(tablero)
+      if $simbolo_encontrado == true
+        revisar_tablero(tablero)
+      end
     end
-    repeticiones_de_busqueda.times do
-      encontrar_fila(tablero)
+    if revisar_solucion == false
+        $simbolo_encontrado = false
+        $fila = 2
+        $columna = 0
+        encontrar_columna(tablero)
+        if $simbolo_encontrado == true
+        revisar_tablero(tablero)
+        end
+    end 
+  end
+
+
+  def se_puede_revisar(tablero)
+    if $simbolo_encontrado
       revisar_tablero(tablero)
     end
   end
@@ -77,14 +104,10 @@ class Logica_Ganador
   def revisar_filas(tablero)
     if $fila == 0
       comparar_casillas(tablero,$fila + 1, $columna, $fila + 2, $columna)
-    else
-      if $fila == 1
+    elsif $fila == 1
         comparar_casillas(tablero,$fila + 1, $columna, $fila - 1, $columna)
-      else
-        if $fila == 2
+      elsif $fila == 2
           comparar_casillas(tablero,$fila - 1, $columna, $fila - 2, $columna)
-        end
-      end
     end
   end
 
@@ -113,8 +136,9 @@ class Logica_Ganador
     if $solucion_encontrada == true 
       return $solucion_encontrada
     else
-      return false
+    return $solucion_encontrada
     end
   end
-
 end
+#xx = Logica_Ganador.new()
+#xx.prueba

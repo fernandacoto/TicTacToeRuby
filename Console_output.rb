@@ -18,6 +18,7 @@ class Console_Output
     @jugador = $primer_jugador
     $cantidad_maxima_movidas = 9
     $instancia_logica_ganador = Logica_Ganador.new()
+    @revisando_jugador = 0
   end
   
   def hacer_menu
@@ -74,11 +75,20 @@ class Console_Output
       print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
       hacer_validaciones
       selecionar_jugador
-      $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
+      @revisando_jugador = cual_jugador
+      $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@revisando_jugador,$numero_casillas_ocupadas)
       chequear_ganador
       $numero_casillas_ocupadas +=1
     end
     hacer_menu
+  end
+
+  def cual_jugador
+    if @jugador == $primer_jugador
+      return 2
+    else
+      return 1
+    end
   end
 
   def pintar_tablero #falta modificar
@@ -137,9 +147,9 @@ class Console_Output
     if $existe_ganador == true
       print "FIN DEL JUEGO HAY UN GANADOR \n"
       if @jugador == 1
-        print "Felicidades jugador 1\n"
+        print "Felicidades jugador #{@revisando_jugador}\n"
       else
-        print "Felicidades jugador 2\n"
+        print "Felicidades jugador #{@revisando_jugador}\n"
       end
     end
   end
@@ -150,12 +160,15 @@ class Console_Output
     pintar_tablero
     while $numero_casillas_ocupadas < $cantidad_maxima_movidas && $existe_ganador == false
       if @jugador == $primer_jugador
-        realizar_movida_usuario
+        realizar_movida_usuario 
       else
         realizar_movida_computadora
       end
       $numero_casillas_ocupadas +=1
     end
+    @revisando_jugador = $primer_jugador
+    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@revisando_jugador,$numero_casillas_ocupadas)
+    chequear_ganador
     hacer_menu
   end
 
@@ -164,24 +177,23 @@ class Console_Output
       hacer_validaciones
       @tablero[$fila][$columna] = "X"
       @jugador = $segundo_jugador
+      pintar_tablero
   end
 
   def realizar_movida_computadora
-    @jugador = $primer_jugador
-    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
-    chequear_ganador
-    @jugador = $segundo_jugador
     if $existe_ganador != true
       continuar_juego
     end
   end
 
   def continuar_juego
+    print "Movida de la computadora \n"
     $instancia_logica_computadora = Logica_Computadora.new()
     arreglo_resultado = Array.new()
     arreglo_resultado = $instancia_logica_computadora.iniciar_movida_computadora(@tablero,$numero_casillas_ocupadas)
     @tablero[arreglo_resultado[0]][arreglo_resultado[1]] = "O"
     $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
+    @revisando_jugador = 2
     chequear_ganador
     @jugador = $primer_jugador
     pintar_tablero
