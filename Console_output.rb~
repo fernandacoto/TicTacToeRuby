@@ -144,6 +144,11 @@ class Console_Output
     end
   end
 
+  def continuar_jugando
+    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
+    chequear_ganador
+  end
+
   def iniciar_partida_computadora_usuario
     $numero_casillas_ocupadas = 0
     $existe_ganador = false

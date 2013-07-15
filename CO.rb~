@@ -133,5 +133,5 @@ class Console_Output
 end
 
 pinta = Console_Output.new()
-#pinta.partida_usuarios
-pinta.partida_computadora_usuario
+pinta.partida_usuarios
+#pinta.partida_computadora_usuario
