@@ -140,5 +140,3 @@ class Logica_Ganador
     end
   end
 end
-#xx = Logica_Ganador.new() prueba branching
-#xx.prueba
