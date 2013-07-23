@@ -1,4 +1,5 @@
 class Logica_Ganador
+  # cambio cambio 
   $solucion_encontrada
   $simbolo_utilizando
   $simbolo_encontrado
