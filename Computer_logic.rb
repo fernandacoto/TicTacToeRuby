@@ -259,3 +259,5 @@ class Logica_Computadora
   end
 
 end
+# prueba = Logica_Computadora.new()
+# El comentario anterior es solo para demostrar como funciona git branchin #CHANGE 2
