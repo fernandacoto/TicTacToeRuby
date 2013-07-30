@@ -145,11 +145,7 @@ class Console_Output
   def chequear_ganador
     if $existe_ganador == true
       print "FIN DEL JUEGO HAY UN GANADOR \n"
-      if @jugador == 1
-        print "Felicidades jugador #{@revisando_jugador}\n"
-      else
-        print "Felicidades jugador #{@revisando_jugador}\n"
-      end
+      print "Felicidades jugador #{@revisando_jugador}\n"
     end
   end
 
