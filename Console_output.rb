@@ -24,7 +24,6 @@ class Console_Output
   def hacer_menu
     initialize
     mostrar_opciones
-    print "opcion =" 
     opcion = gets.to_i
     while opcion != 4 
       procesar_opcion(opcion)
@@ -33,11 +32,8 @@ class Console_Output
   end
 
   def mostrar_opciones
-    print "Tic Tac Toe \n"
-    print "1. Instrucciones \n"
-    print "2. Usuario-Usuario \n"
-    print "3. Usuario-Computadora \n"
-    print "4. Salir \n"
+    print "Tic Tac Toe \n1. Instrucciones \n2. Usuario-Usuario \n3. Usuario-Computadora \n4. Salir \n"
+    print "opcion ="
   end
  
   def procesar_opcion(opcion)
@@ -55,14 +51,7 @@ class Console_Output
   end
 
   def mostrar_instrucciones
-    print "Para jugar debe de digitar el numero de la fila y columna en la cual desea jugar\n"
-    print "0 0 | 0 1 | 0 2 \n"
-    print "--------------- \n"
-    print "1 0 | 1 1 | 1 2 \n"
-    print "--------------- \n"
-    print "2 0 | 2 1 | 2 2 \n"
-    print "Por ejemplo para seleccionar la casilla central, cuando se me pide la fila digito 1 y cuando es la columna digito 1 \n"
-    print "Presione cualquier tecla para continuar \n"
+    print "Para jugar debe de digitar el numero de la fila y columna en la cual desea jugar\n0 0 | 0 1 | 0 2 \n--------------- \n1 0 | 1 1 | 1 2 \n--------------- \n2 0 | 2 1 | 2 2 \nPor ejemplo para seleccionar la casilla central, cuando se me pide la fila digito 1 y cuando es la columna digito 1 \nPresione cualquier tecla para continuar \n"
     gets 
     hacer_menu
   end
@@ -73,21 +62,31 @@ class Console_Output
     pintar_tablero
     while $numero_casillas_ocupadas < $cantidad_maxima_movidas && $existe_ganador == false
       print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
-      hacer_validaciones
-      selecionar_jugador
-      @revisando_jugador = cual_jugador
-      $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@revisando_jugador,$numero_casillas_ocupadas)
-      chequear_ganador
+      proceder_jugada
       $numero_casillas_ocupadas +=1
     end
     hacer_menu
   end
 
+  def proceder_jugada
+    hacer_validaciones
+    selecionar_jugador
+    @revisando_jugador = cual_jugador
+    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@revisando_jugador,$numero_casillas_ocupadas)    
+    chequear_ganador
+  end
+
+  def hacer_validaciones
+    validar_entrada("fila ")
+    validar_entrada("columna ")
+    validar_disponibilidad
+  end
+
   def cual_jugador
     if @jugador == $primer_jugador
-      return 2
+      return $segundo_jugador
     else
-      return 1
+      return $primer_jugador
     end
   end
 
@@ -99,12 +98,6 @@ class Console_Output
     print " #{@tablero[2][0]} | #{@tablero[2][1]} | #{@tablero[2][2]}\n"
   end
 
-  def hacer_validaciones
-    validar_entrada("fila ")
-    validar_entrada("columna ")
-    validar_disponibilidad
-  end
-
   def validar_entrada(argumento)
     print argumento
     es_fila(argumento)
@@ -113,12 +106,12 @@ class Console_Output
   def es_fila(argumento)
     if argumento == "fila "
       $fila = gets.to_i
-      while $fila > 2
+      while $fila > 2 ##Refactor
         validar_entrada(argumento)
       end
     else
       $columna = gets.to_i
-      while $columna > 2
+      while $columna > 2 ##Refactor
         validar_entrada(argumento)
       end
     end
