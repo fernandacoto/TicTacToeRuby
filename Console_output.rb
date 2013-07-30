@@ -60,12 +60,16 @@ class Console_Output
     $numero_casillas_ocupadas = 0
     $existe_ganador = false
     pintar_tablero
+    continuar_jugando? 
+    hacer_menu
+  end
+
+  def continuar_jugando?
     while $numero_casillas_ocupadas < $cantidad_maxima_movidas && $existe_ganador == false
       print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
       proceder_jugada
       $numero_casillas_ocupadas +=1
     end
-    hacer_menu
   end
 
   def proceder_jugada
@@ -80,6 +84,17 @@ class Console_Output
     validar_entrada("fila ")
     validar_entrada("columna ")
     validar_disponibilidad
+  end
+
+  def selecionar_jugador
+    if @jugador == $primer_jugador
+      @tablero[$fila][$columna] = "X"
+      @jugador = $segundo_jugador
+    else
+      @tablero[$fila][$columna] = "O"
+      @jugador = $primer_jugador
+    end
+    pintar_tablero
   end
 
   def cual_jugador
@@ -100,20 +115,22 @@ class Console_Output
 
   def validar_entrada(argumento)
     print argumento
-    es_fila(argumento)
+    es_fila?(argumento)
   end
 
-  def es_fila(argumento)
+  def es_fila?(argumento)
     if argumento == "fila "
       $fila = gets.to_i
-      while $fila > 2 ##Refactor
-        validar_entrada(argumento)
-      end
+      solicitar_datos_nuevamente?($fila,argumento)
     else
       $columna = gets.to_i
-      while $columna > 2 ##Refactor
-        validar_entrada(argumento)
-      end
+      solicitar_datos_nuevamente?($columna,argumento)
+    end
+  end
+
+  def solicitar_datos_nuevamente?(ubicacion,argumento)
+    while ubicacion > 2
+      validar_entrada(argumento)
     end
   end
 
@@ -124,18 +141,7 @@ class Console_Output
       validar_entrada("columna ")
     end
   end
-
-  def selecionar_jugador #falta modificar
-    if @jugador == $primer_jugador
-      @tablero[$fila][$columna] = "X"
-      @jugador = $segundo_jugador
-    else
-      @tablero[$fila][$columna] = "O"
-      @jugador = $primer_jugador
-    end
-    pintar_tablero
-  end
-
+  
   def chequear_ganador
     if $existe_ganador == true
       print "FIN DEL JUEGO HAY UN GANADOR \n"
