@@ -1,5 +1,4 @@
 class Logica_Ganador
-  # cambio cambio 
   $solucion_encontrada
   $simbolo_utilizando
   $simbolo_encontrado
@@ -12,13 +11,6 @@ class Logica_Ganador
     $fila = 0
     $columna = 0
     $primer_jugador = 1
-  end
-
-  def prueba
-  #  #arr= [["X","O","O"],["O","O","X"],["X","X","X"]]
-    arr= [["X","O","O"],["O","O","X"],["X","X","X"]]
-    iniciar_buscar_ganador(arr,1,4)
-    print $solucion_encontrada
   end
 
   def iniciar_buscar_ganador(tablero,jugador,movidas)
@@ -82,8 +74,8 @@ class Logica_Ganador
   end
 
   def encontrar_columna(tablero)
-    while $simbolo_encontrado == false && $columna < 3
-      if tablero[$fila][$columna] == $simbolo_utilizando
+    while !$simbolo_encontrado and $columna < 3
+      if tablero[$fila][$columna].eql?$simbolo_utilizando
         $simbolo_encontrado = true
       else
         $columna += 1
@@ -94,7 +86,7 @@ class Logica_Ganador
   def revisar_tablero(tablero)
     revisar_filas(tablero)
     revisar_columnas(tablero)
-    if $solucion_encontrada == false && tablero[1][1] == $simbolo_utilizando
+    if !$solucion_encontrada and tablero[1][1].eql?$simbolo_utilizando
       $fila = 1
       $columna = 1
       comparar_casillas(tablero,$fila - 1,$columna - 1,$fila + 1,$columna + 1)
@@ -103,23 +95,23 @@ class Logica_Ganador
   end
 
   def revisar_filas(tablero)
-    if $fila == 0
+    if $fila.eql?0
       comparar_casillas(tablero,$fila + 1, $columna, $fila + 2, $columna)
-    elsif $fila == 1
+    elsif $fila.eql?1
         comparar_casillas(tablero,$fila + 1, $columna, $fila - 1, $columna)
-      elsif $fila == 2
+      elsif $fila.eql?2
           comparar_casillas(tablero,$fila - 1, $columna, $fila - 2, $columna)
     end
   end
 
   def revisar_columnas(tablero)
-    if $columna == 0
+    if $columna.eql?0
       comparar_casillas(tablero,$fila,$columna + 1, $fila,$columna + 2)
     else
-      if $columna == 1
+      if $columna.eql?1
         comparar_casillas(tablero,$fila,$columna + 1, $fila,$columna - 1)
       else
-        if $columna == 2
+        if $columna.eql?2
           comparar_casillas(tablero,$fila,$columna - 1, $fila,$columna - 2)
         end
       end
@@ -134,11 +126,6 @@ class Logica_Ganador
   end
 
   def revisar_solucion
-    if $solucion_encontrada == true 
-      return $solucion_encontrada
-    else
     return $solucion_encontrada
-    end
   end
 end
-# prueba git branching 1 
