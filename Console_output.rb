@@ -121,10 +121,10 @@ class Console_Output
   def es_fila?(argumento)
     if argumento == "fila "
       $fila = gets.to_i
-      solicitar_datos_nuevamente?($fila,argumento)
+      solicitar_datos_nuevamente?($fila,"fila ")
     else
       $columna = gets.to_i
-      solicitar_datos_nuevamente?($columna,argumento)
+      solicitar_datos_nuevamente?($columna, "columna ")
     end
   end
 
@@ -149,7 +149,7 @@ class Console_Output
     end
   end
 
-  def iniciar_partida_computadora_usuario
+  def iniciar_partida_computadora_usuario  #falta modificar
     $numero_casillas_ocupadas = 0
     $existe_ganador = false
     pintar_tablero
@@ -169,10 +169,10 @@ class Console_Output
 
   def realizar_movida_usuario
     print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
-      hacer_validaciones
-      @tablero[$fila][$columna] = "X"
-      @jugador = $segundo_jugador
-      pintar_tablero
+    hacer_validaciones
+    @tablero[$fila][$columna] = "X"
+    @jugador = $segundo_jugador
+    pintar_tablero
   end
 
   def realizar_movida_computadora
