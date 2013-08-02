@@ -55,13 +55,6 @@ class Logica_Ganador
     end 
   end
 
-
-  def se_puede_revisar(tablero)
-    if $simbolo_encontrado
-      revisar_tablero(tablero)
-    end
-  end
-
   def encontrar_fila(tablero)
     $simbolo_encontrado = false
     while !$simbolo_encontrado and $fila < 3
