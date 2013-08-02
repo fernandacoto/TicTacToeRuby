@@ -19,7 +19,7 @@ class Logica_Computadora
     $fila = 0
     $columna = 0
     $cantidad_casillas_ocupadas = cantidad_casillas_ocupadas
-    if $cantidad_casillas_ocupadas < 3
+    if $cantidad_casillas_ocupadas < 3 #extraer
       encontrar_fila_vacia(tablero)
     else
       elegir_jugada(tablero)
@@ -29,7 +29,7 @@ class Logica_Computadora
 
   def elegir_jugada(tablero)
     encontrar_fila_vacia(tablero)
-    if $solucion_encontrada == true
+    if $solucion_encontrada #extraer
       return $movida
     else
       verificar_posibilidad_gane_usuario(tablero)
@@ -41,7 +41,7 @@ class Logica_Computadora
     $simbolo_utilizando = "X"
     $solucion_encontrada = false
     $solucion_encontrada = buscar_opciones_gane_usuario(tablero)
-    if $solucion_encontrada == true
+    if $solucion_encontrada # extraer
       return $movida
     else
       chequear_movimiento_acertado(tablero)
@@ -49,7 +49,7 @@ class Logica_Computadora
   end
 
   def chequear_movimiento_acertado(tablero)
-    if $solucion_encontrada == false
+    if !$solucion_encontrada
       $fila = 0
       $columna = 0
       $simbolo_utilizando = " "
@@ -83,7 +83,7 @@ class Logica_Computadora
   end
 
   def revisar_diagonales(tablero)
-    if $solucion_encontrada == false && tablero[1][1] == $simbolo_utilizando
+    if !$solucion_encontrada and tablero[1][1].eql?$simbolo_utilizando
       $fila = 1
       $columna = 1
       comparar_casillas(tablero,$fila - 1,$columna - 1,$fila + 1,$columna + 1)
@@ -101,7 +101,7 @@ class Logica_Computadora
   end
 
   def iniciar_primer_movimiento(tablero)
-    if tablero[1][1] == " "
+    if tablero[1][1].eql? " "
       2.times do $movida.push(1) end
     else
       buscar_movida(tablero)
@@ -109,9 +109,9 @@ class Logica_Computadora
   end
 
   def buscar_movida(tablero)
-    while $simbolo_encontrado == false && $fila < 3
+    while !$simbolo_encontrado and  $fila < 3
       buscar_columna_vacia(tablero)
-      if $simbolo_encontrado == false
+      if !$simbolo_encontrado 
         $fila += 1
         $columna = 0
       end
@@ -120,8 +120,8 @@ class Logica_Computadora
 
   def buscar_columna_vacia(tablero)
      $simbolo_utilizando = " "
-     while $simbolo_encontrado == false && $columna < 3
-       if tablero[$fila][$columna] == $simbolo_utilizando
+     while !$simbolo_encontrado and $columna < 3
+       if tablero[$fila][$columna].eql?$simbolo_utilizando
          $movida[0] = $fila
          $movida[1] = $columna
          $simbolo_encontrado = true
@@ -142,9 +142,9 @@ class Logica_Computadora
   
   def encontrar_fila(tablero)
     $simbolo_encontrado = false
-    while $simbolo_encontrado == false && $fila < 3
+    while !$simbolo_encontrado and $fila < 3
       encontrar_columna(tablero)
-      if $simbolo_encontrado == false
+      if !$simbolo_encontrado
         $fila += 1
         $columna = 0
       end
@@ -152,8 +152,8 @@ class Logica_Computadora
   end
 
   def encontrar_columna(tablero)
-    while $simbolo_encontrado == false && $columna < 3
-      if tablero[$fila][$columna] == $simbolo_utilizando
+    while !$simbolo_encontrado and $columna < 3
+      if tablero[$fila][$columna].eql?$simbolo_utilizando
         $simbolo_encontrado = true
       else
         $columna += 1
@@ -162,13 +162,13 @@ class Logica_Computadora
   end
 
   def revisar_filas_vacias(tablero)
-    if $fila == 0
+    if $fila.eql?0
       seleccionar_casillas_desocupadas(tablero,$fila + 1, $columna, $fila + 2, $columna)
     else
-      if $fila == 1
+      if $fila.eql?1
         seleccionar_casillas_desocupadas(tablero,$fila + 1, $columna, $fila - 1, $columna)
       else
-        if $fila == 2
+        if $fila.eql?2
           seleccionar_casillas_desocupadas(tablero,$fila - 1, $columna, $fila - 2, $columna)
         end
       end
@@ -176,13 +176,13 @@ class Logica_Computadora
   end
 
   def revisar_columnas_vacias(tablero)
-    if $columna == 0
+    if $columna.eql?0
       seleccionar_casillas_desocupadas(tablero,$fila,$columna + 1, $fila,$columna + 2)
     else
-      if $columna == 1
+      if $columna.eql?1
         seleccionar_casillas_desocupadas(tablero,$fila,$columna + 1, $fila,$columna - 1)
       else
-        if $columna == 2
+        if $columna.eql?2
           seleccionar_casillas_desocupadas(tablero,$fila,$columna - 1, $fila,$columna - 2)
         end
       end
@@ -190,8 +190,8 @@ class Logica_Computadora
   end
 
   def seleccionar_casillas_desocupadas(tablero,fila1,columna1,fila2,columna2)
-    if $solucion_encontrada == false
-      if tablero[fila1][columna1] == " " && tablero[fila2][columna2] == " "
+    if !solucion_encontrada
+      if tablero[fila1][columna1].eql?" " and tablero[fila2][columna2].eql?" "
         $solucion_encontrada = true
         $movida[0]=fila1
         $movida[1]=columna1
@@ -203,7 +203,7 @@ class Logica_Computadora
     $solucion_encontrada = false
     revisar_filas(tablero)
     revisar_columnas(tablero)
-    if $solucion_encontrada == false && tablero[1][1] == $simbolo_utilizando
+    if !$solucion_encontrada and tablero[1][1].eql?$simbolo_utilizando
       $fila = 1
       $columna = 1
       comparar_casillas(tablero,$fila - 1,$columna - 1,$fila + 1,$columna + 1)
@@ -212,13 +212,13 @@ class Logica_Computadora
   end
 
   def revisar_filas(tablero)
-    if $fila == 0
+    if $fila.eql?0
       comparar_casillas(tablero,$fila + 1, $columna, $fila + 2, $columna)
     else
-      if $fila == 1
+      if $fila.eql?1
         comparar_casillas(tablero,$fila + 1, $columna, $fila - 1, $columna)
       else
-        if $fila == 2
+        if $fila.eql?2
           comparar_casillas(tablero,$fila - 1, $columna, $fila - 2, $columna)
         end
       end
@@ -226,27 +226,27 @@ class Logica_Computadora
   end
 
   def revisar_columnas(tablero)
-    if $columna == 0
+    if $columna.eql?0
       comparar_casillas(tablero,$fila,$columna + 1, $fila,$columna + 2)
     else
-      if $columna == 1
+      if $columna.eql?1
         comparar_casillas(tablero,$fila,$columna + 1, $fila,$columna - 1)
       else
-        if $columna == 2
+        if $columna.eql?2
           comparar_casillas(tablero,$fila,$columna - 1, $fila,$columna - 2)
         end
       end
     end
   end
 
-  def comparar_casillas(tablero,fila1,columna1,fila2,columna2)
-    if $solucion_encontrada == false && fila1 < 3 && fila2 < 3
-      if tablero[fila1][columna1] == $simbolo_utilizando && tablero[fila2][columna2] == " "
+  def comparar_casillas(tablero,fila1,columna1,fila2,columna2) # hacer mas pequeno
+    if !$solucion_encontrada and fila1 < 3 and fila2 < 3
+      if tablero[fila1][columna1].eql?$simbolo_utilizando and tablero[fila2][columna2].eql?" "
         $solucion_encontrada = true
         $movida[0]=fila2
         $movida[1]=columna2
       else 
-        if tablero[fila1][columna1] == " " && tablero[fila2][columna2] == $simbolo_utilizando
+        if tablero[fila1][columna1].eql?" " and tablero[fila2][columna2].eql?$simbolo_utilizando
         $solucion_encontrada = true
         $movida[0]=fila1
         $movida[1]=columna1
@@ -259,5 +259,3 @@ class Logica_Computadora
   end
 
 end
-# prueba = Logica_Computadora.new()
-# El comentario anterior es solo para demostrar como funciona git branchin #CHANGE 2
