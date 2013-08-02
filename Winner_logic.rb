@@ -23,33 +23,33 @@ class Logica_Ganador
   end
 
   def seleccionar_jugador(jugador)
-    if jugador == $primer_jugador
+    if jugador.eql?$primer_jugador
       $simbolo_utilizando = "X"
     else
       $simbolo_utilizando = "O"
     end
   end
 
-  def iteraciones_de_busqueda(tablero)
+  def iteraciones_de_busqueda(tablero) #falta modificar
     $solucion_encontrada = false
     $simbolo_encontrado = false
     encontrar_columna(tablero)
     revisar_tablero(tablero)
-    if revisar_solucion == false
+    if !revisar_solucion
       $simbolo_encontrado = false
       $fila = 1
       $columna = 0
       encontrar_columna(tablero)
-      if $simbolo_encontrado == true
+      if $simbolo_encontrado
         revisar_tablero(tablero)
       end
     end
-    if revisar_solucion == false
+    if !revisar_solucion
         $simbolo_encontrado = false
         $fila = 2
         $columna = 0
         encontrar_columna(tablero)
-        if $simbolo_encontrado == true
+        if $simbolo_encontrado
         revisar_tablero(tablero)
         end
     end 
@@ -64,9 +64,9 @@ class Logica_Ganador
 
   def encontrar_fila(tablero)
     $simbolo_encontrado = false
-    while $simbolo_encontrado == false && $fila < 3
+    while !$simbolo_encontrado and $fila < 3
       encontrar_columna(tablero)
-      if $simbolo_encontrado == false
+      if !$simbolo_encontrado
         $fila += 1
         $columna = 0
       end
@@ -119,12 +119,12 @@ class Logica_Ganador
   end
 
   def comparar_casillas(tablero,fila1,columna1,fila2,columna2)
-    if tablero[fila1][columna1] == $simbolo_utilizando && tablero[fila2][columna2] == $simbolo_utilizando
+    if tablero[fila1][columna1].eql?$simbolo_utilizando and tablero[fila2][columna2].eql?$simbolo_utilizando
       $solucion_encontrada = true
     end
    return $solucion_encontrada
   end
-
+ 
   def revisar_solucion
     return $solucion_encontrada
   end
