@@ -37,13 +37,13 @@ class Console_Output
   end
  
   def procesar_opcion(opcion)
-    if opcion == 1
+    if opcion.eql?1
       mostrar_instrucciones
     else
-      if opcion == 2
+      if opcion.eql?2
         iniciar_partida_usuario
       else
-        if opcion == 3
+        if opcion.eql?3
           iniciar_partida_computadora_usuario
         end
       end
@@ -65,7 +65,7 @@ class Console_Output
   end
 
   def continuar_jugando?
-    while $numero_casillas_ocupadas < $cantidad_maxima_movidas && $existe_ganador == false
+    while $numero_casillas_ocupadas < $cantidad_maxima_movidas and !$existe_ganador
       print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
       proceder_jugada
       $numero_casillas_ocupadas +=1
@@ -87,7 +87,7 @@ class Console_Output
   end
 
   def selecionar_jugador
-    if @jugador == $primer_jugador
+    if @jugador.eql?$primer_jugador
       @tablero[$fila][$columna] = "X"
       @jugador = $segundo_jugador
     else
@@ -98,14 +98,14 @@ class Console_Output
   end
 
   def cual_jugador
-    if @jugador == $primer_jugador
+    if @jugador.eql?$primer_jugador
       return $segundo_jugador
     else
       return $primer_jugador
     end
   end
 
-  def pintar_tablero #falta modificar
+  def pintar_tablero
     print " #{@tablero[0][0]} | #{@tablero[0][1]} | #{@tablero[0][2]}\n"
     print "------------\n"
     print " #{@tablero[1][0]} | #{@tablero[1][1]} | #{@tablero[1][2]}\n"
@@ -119,7 +119,7 @@ class Console_Output
   end
 
   def es_fila?(argumento)
-    if argumento == "fila "
+    if argumento.eql?"fila "
       $fila = gets.to_i
       solicitar_datos_nuevamente?($fila,"fila ")
     else
@@ -143,7 +143,7 @@ class Console_Output
   end
   
   def chequear_ganador
-    if $existe_ganador == true
+    if $existe_ganador
       print "FIN DEL JUEGO HAY UN GANADOR \n"
       print "Felicidades jugador #{@revisando_jugador}\n"
     end
@@ -153,8 +153,8 @@ class Console_Output
     $numero_casillas_ocupadas = 0
     $existe_ganador = false
     pintar_tablero
-    while $numero_casillas_ocupadas < $cantidad_maxima_movidas && $existe_ganador == false
-      if @jugador == $primer_jugador
+    while $numero_casillas_ocupadas < $cantidad_maxima_movidas and !$existe_ganador
+      if @jugador.eql?$primer_jugador
         realizar_movida_usuario 
       else
         realizar_movida_computadora
@@ -176,7 +176,7 @@ class Console_Output
   end
 
   def realizar_movida_computadora
-    if $existe_ganador != true
+    if !$existe_ganador
       continuar_juego
     end
   end
@@ -196,6 +196,4 @@ class Console_Output
 
 end
 jugar = Console_Output.new()
-#jugar.iniciar_partida_usuario
 jugar.hacer_menu
-#pinta.iniciar_partida_computadora_usuario
