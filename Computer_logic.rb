@@ -19,29 +19,41 @@ class Logica_Computadora
     $fila = 0
     $columna = 0
     $cantidad_casillas_ocupadas = cantidad_casillas_ocupadas
-    if $cantidad_casillas_ocupadas < 3 #extraer
+    movida_aleatoria?(tablero)
+    return $movida
+  end
+
+  def movida_aleatoria?(tablero)
+    if $cantidad_casillas_ocupadas < 3 
       encontrar_fila_vacia(tablero)
     else
       elegir_jugada(tablero)
     end
-    return $movida
   end
 
   def elegir_jugada(tablero)
     encontrar_fila_vacia(tablero)
-    if $solucion_encontrada #extraer
+    hay_solucion?(tablero)
+    return $movida
+  end
+
+  def hay_solucion?(tablero)
+    if $solucion_encontrada 
       return $movida
     else
       verificar_posibilidad_gane_usuario(tablero)
     end
-    return $movida
   end
 
   def verificar_posibilidad_gane_usuario(tablero)
     $simbolo_utilizando = "X"
     $solucion_encontrada = false
     $solucion_encontrada = buscar_opciones_gane_usuario(tablero)
-    if $solucion_encontrada # extraer
+    marcar_o_buscar?(tablero)
+  end
+
+  def marcar_o_buscar?(tablero)
+    if $solucion_encontrada 
       return $movida
     else
       chequear_movimiento_acertado(tablero)
