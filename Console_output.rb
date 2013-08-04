@@ -149,10 +149,18 @@ class Console_Output
     end
   end
 
-  def iniciar_partida_computadora_usuario  #falta modificar
+  def iniciar_partida_computadora_usuario
     $numero_casillas_ocupadas = 0
     $existe_ganador = false
     pintar_tablero
+    seleccionar_jugador
+    @revisando_jugador = $primer_jugador
+    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@revisando_jugador,$numero_casillas_ocupadas)
+    chequear_ganador
+    hacer_menu
+  end
+
+  def seleccionar_jugador
     while $numero_casillas_ocupadas < $cantidad_maxima_movidas and !$existe_ganador
       if @jugador.eql?$primer_jugador
         realizar_movida_usuario 
@@ -161,10 +169,6 @@ class Console_Output
       end
       $numero_casillas_ocupadas +=1
     end
-    @revisando_jugador = $primer_jugador
-    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@revisando_jugador,$numero_casillas_ocupadas)
-    chequear_ganador
-    hacer_menu
   end
 
   def realizar_movida_usuario
