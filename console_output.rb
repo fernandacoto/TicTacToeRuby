@@ -1,203 +1,203 @@
 require_relative "./winner_logic.rb"
 require_relative "./computer_logic.rb"
 class Console_Output
-  $existe_ganador
-  $fila
-  $columna
-  $instancia_logica_ganador
-  $numero_casillas_ocupadas
-  $instancia_logica_computadora
-  $cantidad_maxima_movidas
-  $primer_jugador
-  $segundo_jugador
+  $is_there_winner
+  $row
+  $column
+  $winner_logic_instance
+  $number_occupied_boxes
+  $computer_logic_instance
+  $max_movements
+  $first_player
+  $second_player
 
   def initialize
-    @tablero = [[" "," "," "],[" "," "," "],[" "," "," "]]
-    $primer_jugador = 1
-    $segundo_jugador = 2
-    @jugador = $primer_jugador
-    $cantidad_maxima_movidas = 9
-    $instancia_logica_ganador = Logica_Ganador.new()
-    @revisando_jugador = 0
+    @board = [[" "," "," "],[" "," "," "],[" "," "," "]]
+    $first_player = 1
+    $second_player = 2
+    @player = $first_player
+    $max_movements = 9
+    $winner_logic_instance = Logica_Ganador.new()
+    @checking_player = 0
   end
   
-  def hacer_menu
+  def make_menu
     initialize
-    mostrar_opciones
-    opcion = gets.to_i
-    while opcion != 4 
-      procesar_opcion(opcion)
+    show_options
+    option = gets.to_i
+    while option != 4 
+      process_option(option)
     end
     exit
   end
 
-  def mostrar_opciones
+  def show_options
     print "Tic Tac Toe \n1. Instrucciones \n2. Usuario-Usuario \n3. Usuario-Computadora \n4. Salir \n"
     print "opcion ="
   end
  
-  def procesar_opcion(opcion)
-    if opcion.eql?1
-      mostrar_instrucciones
+  def process_option(option)
+    if option.eql?1
+      show_instructions
     else
-      if opcion.eql?2
-        iniciar_partida_usuario
+      if option.eql?2
+        start_user_game
       else
-        if opcion.eql?3
-          iniciar_partida_computadora_usuario
+        if option.eql?3
+          start_computer_game
         end
       end
     end
   end
 
-  def mostrar_instrucciones
+  def show_instructions
     print "Para jugar debe de digitar el numero de la fila y columna en la cual desea jugar\n0 0 | 0 1 | 0 2 \n--------------- \n1 0 | 1 1 | 1 2 \n--------------- \n2 0 | 2 1 | 2 2 \nPor ejemplo para seleccionar la casilla central, cuando se me pide la fila digito 1 y cuando es la columna digito 1 \nPresione cualquier tecla para continuar \n"
     gets 
-    hacer_menu
+    make_menu
   end
   
-  def iniciar_partida_usuario 
-    $numero_casillas_ocupadas = 0
-    $existe_ganador = false
-    pintar_tablero
-    continuar_jugando? 
-    hacer_menu
+  def start_user_game
+    $number_occupied_boxes = 0
+    $is_there_winner = false
+    paint_board
+    keep_playing? 
+    make_menu
   end
 
-  def continuar_jugando?
-    while $numero_casillas_ocupadas < $cantidad_maxima_movidas and !$existe_ganador
-      print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
-      proceder_jugada
-      $numero_casillas_ocupadas +=1
+  def keep_playing?
+    while $number_occupied_boxes < $max_movements and !$is_there_winner
+      print "Jugador #{@player} digite el numero de la casilla a marcar\n"
+      make_move
+      $number_occupied_boxes +=1
     end
   end
 
-  def proceder_jugada
-    hacer_validaciones
-    selecionar_jugador
-    @revisando_jugador = cual_jugador
-    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@revisando_jugador,$numero_casillas_ocupadas)    
-    chequear_ganador
+  def make_move
+    validate_data
+    pick_player
+    @checking_player  = which_player?
+    $is_there_winner = $winner_logic_instance.start_find_winner(@board,@checking_player,$number_occupied_boxes)    
+    check_winner
   end
 
-  def hacer_validaciones
-    validar_entrada("fila ")
-    validar_entrada("columna ")
-    validar_disponibilidad
+  def validate_data
+    validate_input("fila ")
+    validate_input("columna ")
+    check_availability
   end
 
-  def selecionar_jugador
-    if @jugador.eql?$primer_jugador
-      @tablero[$fila][$columna] = "X"
-      @jugador = $segundo_jugador
+  def pick_player
+    if @player.eql?$first_player
+      @board[$row][$column] = "X"
+      @player = $second_player
     else
-      @tablero[$fila][$columna] = "O"
-      @jugador = $primer_jugador
+      @board[$row][$column] = "O"
+      @player = $first_player
     end
-    pintar_tablero
+    paint_board
   end
 
-  def cual_jugador
-    if @jugador.eql?$primer_jugador
-      return $segundo_jugador
+  def which_player?
+    if @player.eql?$first_player
+      return $second_player
     else
-      return $primer_jugador
+      return $first_player
     end
   end
 
-  def pintar_tablero
-    print " #{@tablero[0][0]} | #{@tablero[0][1]} | #{@tablero[0][2]}\n"
+  def paint_board
+    print " #{@board[0][0]} | #{@board[0][1]} | #{@board[0][2]}\n"
     print "------------\n"
-    print " #{@tablero[1][0]} | #{@tablero[1][1]} | #{@tablero[1][2]}\n"
+    print " #{@board[1][0]} | #{@board[1][1]} | #{@board[1][2]}\n"
     print "------------\n"
-    print " #{@tablero[2][0]} | #{@tablero[2][1]} | #{@tablero[2][2]}\n"
+    print " #{@board[2][0]} | #{@board[2][1]} | #{@board[2][2]}\n"
   end
 
-  def validar_entrada(argumento)
-    print argumento
-    es_fila?(argumento)
+  def validate_input(argument)
+    print argument
+    is_row?(argument)
   end
 
-  def es_fila?(argumento)
-    if argumento.eql?"fila "
-      $fila = gets.to_i
-      solicitar_datos_nuevamente?($fila,"fila ")
+  def is_row?(argument)
+    if argument.eql?"fila "
+      $row = gets.to_i
+      ask_data_again?($row,"fila ")
     else
-      $columna = gets.to_i
-      solicitar_datos_nuevamente?($columna, "columna ")
+      $column = gets.to_i
+      ask_data_again?($column, "columna ")
     end
   end
 
-  def solicitar_datos_nuevamente?(ubicacion,argumento)
-    while ubicacion > 2
-      validar_entrada(argumento)
+  def ask_data_again?(location,argument)
+    while location > 2
+      validate_input(argument)
     end
   end
 
-  def validar_disponibilidad
-    while @tablero[$fila][$columna] != " "
+  def check_availability
+    while @board[$row][$column] != " "
       print "Casilla Ocupada seleccione otra\n"
-      validar_entrada("fila ")
-      validar_entrada("columna ")
+      validate_input("fila ")
+      validate_input("columna ")
     end
   end
   
-  def chequear_ganador
-    if $existe_ganador
+  def check_winner
+    if $is_there_winner
       print "FIN DEL JUEGO HAY UN GANADOR \n"
-      print "Felicidades jugador #{@revisando_jugador}\n"
+      print "Felicidades jugador #{@checking_player }\n"
     end
   end
 
-  def iniciar_partida_computadora_usuario
-    $numero_casillas_ocupadas = 0
-    $existe_ganador = false
-    pintar_tablero
-    seleccionar_jugador
-    @revisando_jugador = $primer_jugador
-    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@revisando_jugador,$numero_casillas_ocupadas)
-    chequear_ganador
-    hacer_menu
+  def start_computer_game
+    $number_occupied_boxes = 0
+    $is_there_winner = false
+    paint_board
+    chose_player
+    @checking_player  = $first_player
+    $is_there_winner = $winner_logic_instance.start_find_winner(@board,@checking_player ,$number_occupied_boxes)
+    check_winner
+    make_menu
   end
 
-  def seleccionar_jugador
-    while $numero_casillas_ocupadas < $cantidad_maxima_movidas and !$existe_ganador
-      if @jugador.eql?$primer_jugador
-        realizar_movida_usuario 
+  def chose_player
+    while $number_occupied_boxes < $max_movements and !$is_there_winner
+      if @player.eql?$first_player
+        make_user_movement 
       else
-        realizar_movida_computadora
+        make_computer_movement
       end
-      $numero_casillas_ocupadas +=1
+      $number_occupied_boxes +=1
     end
   end
 
-  def realizar_movida_usuario
-    print "Jugador #{@jugador} digite el numero de la casilla a marcar\n"
-    hacer_validaciones
-    @tablero[$fila][$columna] = "X"
-    @jugador = $segundo_jugador
-    pintar_tablero
+  def make_user_movement
+    print "Jugador #{@player} digite el numero de la casilla a marcar\n"
+    validate_data
+    @board[$row][$column] = "X"
+    @player = $second_player
+    paint_board
   end
 
-  def realizar_movida_computadora
-    if !$existe_ganador
-      continuar_juego
+  def make_computer_movement
+    if !$is_there_winner
+      continue_playing
     end
   end
 
-  def continuar_juego
+  def continue_playing
     print "Movida de la computadora \n"
-    $instancia_logica_computadora = Computer_logic.new()
-    arreglo_resultado = Array.new()
-    arreglo_resultado = $instancia_logica_computadora.start_computer_move(@tablero,$numero_casillas_ocupadas)
-    @tablero[arreglo_resultado[0]][arreglo_resultado[1]] = "O"
-    $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
-    @revisando_jugador = 2
-    chequear_ganador
-    @jugador = $primer_jugador
-    pintar_tablero
+    $computer_logic_instance = Computer_logic.new()
+    result = Array.new()
+    result = $computer_logic_instance.start_computer_move(@board,$number_occupied_boxes)
+    @board[result[0]][result[1]] = "O"
+    $is_there_winner = $winner_logic_instance.start_find_winner(@board,@player,$number_occupied_boxes)
+    @checking_player = 2
+    check_winner
+    @player = $first_player
+    paint_board
   end
 
 end
-jugar = Console_Output.new()
-jugar.hacer_menu
+play = Console_Output.new()
+play.make_menu

@@ -13,7 +13,7 @@ class Logica_Ganador
     $primer_jugador = 1
   end
 
-  def iniciar_buscar_ganador(tablero,jugador,movidas)
+  def start_find_winner(tablero,jugador,movidas)
     $cantidad_movidas = movidas
     $fila = 0
     $columna = 0 
