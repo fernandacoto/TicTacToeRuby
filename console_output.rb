@@ -1,5 +1,5 @@
-require_relative "./Winner_logic.rb"
-require_relative "./Computer_logic.rb"
+require_relative "./winner_logic.rb"
+require_relative "./computer_logic.rb"
 class Console_Output
   $existe_ganador
   $fila
@@ -187,9 +187,9 @@ class Console_Output
 
   def continuar_juego
     print "Movida de la computadora \n"
-    $instancia_logica_computadora = Logica_Computadora.new()
+    $instancia_logica_computadora = Computer_logic.new()
     arreglo_resultado = Array.new()
-    arreglo_resultado = $instancia_logica_computadora.iniciar_movida_computadora(@tablero,$numero_casillas_ocupadas)
+    arreglo_resultado = $instancia_logica_computadora.start_computer_move(@tablero,$numero_casillas_ocupadas)
     @tablero[arreglo_resultado[0]][arreglo_resultado[1]] = "O"
     $existe_ganador = $instancia_logica_ganador.iniciar_buscar_ganador(@tablero,@jugador,$numero_casillas_ocupadas)
     @revisando_jugador = 2
