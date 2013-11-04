@@ -1,124 +1,124 @@
 class Logica_Ganador
-  $solucion_encontrada
-  $simbolo_utilizando
-  $simbolo_encontrado
-  $fila
-  $columna
-  $cantidad_movidas
-  $primer_jugador
+  $solution_founded
+  $actual_symbol
+  $symbol_founded
+  $row
+  $column
+  $number_of_moves
+  $first_player
 
   def initialize
-    $fila = 0
-    $columna = 0
-    $primer_jugador = 1
+    $row = 0
+    $column = 0
+    $first_player = 1
   end
 
-  def start_find_winner(tablero,jugador,movidas)
-    $cantidad_movidas = movidas
-    $fila = 0
-    $columna = 0 
-    seleccionar_jugador(jugador)
-    iteraciones_de_busqueda(tablero)
-    revisar_solucion
+  def start_find_winner(board,player,movements)
+    $number_of_moves = movements
+    $row = 0
+    $column = 0 
+    pick_player(player)
+    searching_iterations(board)
+    check_solution
   end
 
-  def seleccionar_jugador(jugador)
-    if jugador.eql?$primer_jugador
-      $simbolo_utilizando = "X"
+  def pick_player(player)
+    if player.eql?$first_player
+      $actual_symbol = "X"
     else
-      $simbolo_utilizando = "O"
+      $actual_symbol = "O"
     end
   end
 
-  def iteraciones_de_busqueda(tablero) #falta modificar
-    $solucion_encontrada = false
-    $simbolo_encontrado = false
-    encontrar_columna(tablero)
-    revisar_tablero(tablero)
-    if !revisar_solucion
-      $simbolo_encontrado = false
-      $fila = 1
-      $columna = 0
-      encontrar_columna(tablero)
-      if $simbolo_encontrado
-        revisar_tablero(tablero)
+  def searching_iterations(board)
+    $solution_founded = false
+    $symbol_founded = false
+    find_column(board)
+    check_board(board)
+    if !check_solution
+      $symbol_founded = false
+      $row = 1
+      $column = 0
+      find_column(board)
+      if $symbol_founded
+        check_board(board)
       end
     end
-    if !revisar_solucion
-        $simbolo_encontrado = false
-        $fila = 2
-        $columna = 0
-        encontrar_columna(tablero)
-        if $simbolo_encontrado
-        revisar_tablero(tablero)
+    if !check_solution
+        $symbol_founded = false
+        $row = 2
+        $column = 0
+        find_column(board)
+        if $symbol_founded
+        check_board(board)
         end
     end 
   end
 
-  def encontrar_fila(tablero)
-    $simbolo_encontrado = false
-    while !$simbolo_encontrado and $fila < 3
-      encontrar_columna(tablero)
-      if !$simbolo_encontrado
-        $fila += 1
-        $columna = 0
+  def encontrar_fila(board)
+    $symbol_founded = false
+    while !$symbol_founded and $row < 3
+      find_column(board)
+      if !$symbol_founded
+        $row += 1
+        $column = 0
       end
     end
   end
 
-  def encontrar_columna(tablero)
-    while !$simbolo_encontrado and $columna < 3
-      if tablero[$fila][$columna].eql?$simbolo_utilizando
-        $simbolo_encontrado = true
+  def find_column(board)
+    while !$symbol_founded and $column < 3
+      if board[$row][$column].eql?$actual_symbol
+        $symbol_founded = true
       else
-        $columna += 1
+        $column += 1
       end
     end
   end
 
-  def revisar_tablero(tablero)
-    revisar_filas(tablero)
-    revisar_columnas(tablero)
-    if !$solucion_encontrada and tablero[1][1].eql?$simbolo_utilizando
-      $fila = 1
-      $columna = 1
-      comparar_casillas(tablero,$fila - 1,$columna - 1,$fila + 1,$columna + 1)
-      comparar_casillas(tablero,$fila - 1,$columna + 1,$fila + 1,$columna - 1)
+  def check_board(board)
+    check_rows(board)
+    check_columns(board)
+    if !$solution_founded and board[1][1].eql?$actual_symbol
+      $row = 1
+      $column = 1
+      compare_boxes(board,$row - 1,$column - 1,$row + 1,$column + 1)
+      compare_boxes(board,$row - 1,$column + 1,$row + 1,$column - 1)
     end
   end
 
-  def revisar_filas(tablero)
-    if $fila.eql?0
-      comparar_casillas(tablero,$fila + 1, $columna, $fila + 2, $columna)
-    elsif $fila.eql?1
-        comparar_casillas(tablero,$fila + 1, $columna, $fila - 1, $columna)
-      elsif $fila.eql?2
-          comparar_casillas(tablero,$fila - 1, $columna, $fila - 2, $columna)
+  def check_rows(board)
+    if $row.eql?0
+      compare_boxes(board,$row + 1, $column, $row + 2, $column)
+    elsif $row.eql?1
+        compare_boxes(board,$row + 1, $column, $row - 1, $column)
+      elsif $row.eql?2
+          compare_boxes(board,$row - 1, $column, $row - 2, $column)
     end
   end
 
-  def revisar_columnas(tablero)
-    if $columna.eql?0
-      comparar_casillas(tablero,$fila,$columna + 1, $fila,$columna + 2)
+  def check_columns(board)
+    if $column.eql?0
+      compare_boxes(board,$row,$column + 1, $row,$column + 2)
     else
-      if $columna.eql?1
-        comparar_casillas(tablero,$fila,$columna + 1, $fila,$columna - 1)
+      if $column.eql?1
+        compare_boxes(board,$row,$column + 1, $row,$column - 1)
       else
-        if $columna.eql?2
-          comparar_casillas(tablero,$fila,$columna - 1, $fila,$columna - 2)
+        if $column.eql?2
+          compare_boxes(board,$row,$column - 1, $row,$column - 2)
         end
       end
     end
   end
 
-  def comparar_casillas(tablero,fila1,columna1,fila2,columna2)
-    if tablero[fila1][columna1].eql?$simbolo_utilizando and tablero[fila2][columna2].eql?$simbolo_utilizando
-      $solucion_encontrada = true
+  def compare_boxes(board,row_1,column_1,row_2,column_2)
+    if board[row_1][column_1].eql?$actual_symbol and board[row_2][column_2].eql?$actual_symbol
+      $solution_founded = true
     end
-   return $solucion_encontrada
+   return $solution_founded
   end
  
-  def revisar_solucion
-    return $solucion_encontrada
+  def check_solution
+    return $solution_founded
   end
 end

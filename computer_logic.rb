@@ -213,7 +213,7 @@ class Computer_logic
     end
   end
 
-  def compare_boxes(board,row_1,column_1,row_2,column_2) # hacer mas pequeno
+  def compare_boxes(board,row_1,column_1,row_2,column_2)
     if !$solution_founded and row_1 < 3 and row_2 < 3
       if board[row_1][column_1].eql?$actual_symbol and board[row_2][column_2].eql?" "
         $solution_founded = true

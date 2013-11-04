@@ -32,8 +32,8 @@ class Console_Output
   end
 
   def show_options
-    print "Tic Tac Toe \n1. Instrucciones \n2. Usuario-Usuario \n3. Usuario-Computadora \n4. Salir \n"
-    print "opcion ="
+    print "Tic Tac Toe \n1. Instructions \n2. User-User \n3. User-Computer \n4. Exit \n"
+    print "option ="
   end
  
   def process_option(option)
@@ -51,7 +51,7 @@ class Console_Output
   end
 
   def show_instructions
-    print "Para jugar debe de digitar el numero de la fila y columna en la cual desea jugar\n0 0 | 0 1 | 0 2 \n--------------- \n1 0 | 1 1 | 1 2 \n--------------- \n2 0 | 2 1 | 2 2 \nPor ejemplo para seleccionar la casilla central, cuando se me pide la fila digito 1 y cuando es la columna digito 1 \nPresione cualquier tecla para continuar \n"
+    print "To play you need to digit the number of the row and column in the place you wanna move\n0 0 | 0 1 | 0 2 \n--------------- \n1 0 | 1 1 | 1 2 \n--------------- \n2 0 | 2 1 | 2 2 \nFor example to select the central box, when is asked the row I digit 1 and when the column is asked I digit 1 \nPress any key to continue \n"
     gets 
     make_menu
   end
@@ -66,7 +66,7 @@ class Console_Output
 
   def keep_playing?
     while $number_occupied_boxes < $max_movements and !$is_there_winner
-      print "Jugador #{@player} digite el numero de la casilla a marcar\n"
+      print "Player #{@player} digit the number of the box in which you wanna move\n"
       make_move
       $number_occupied_boxes +=1
     end
@@ -81,8 +81,8 @@ class Console_Output
   end
 
   def validate_data
-    validate_input("fila ")
-    validate_input("columna ")
+    validate_input("row ")
+    validate_input("column ")
     check_availability
   end
 
@@ -119,12 +119,12 @@ class Console_Output
   end
 
   def is_row?(argument)
-    if argument.eql?"fila "
+    if argument.eql?"row "
       $row = gets.to_i
-      ask_data_again?($row,"fila ")
+      ask_data_again?($row,"row ")
     else
       $column = gets.to_i
-      ask_data_again?($column, "columna ")
+      ask_data_again?($column, "column ")
     end
   end
 
@@ -136,16 +136,16 @@ class Console_Output
 
   def check_availability
     while @board[$row][$column] != " "
-      print "Casilla Ocupada seleccione otra\n"
-      validate_input("fila ")
-      validate_input("columna ")
+      print "Occupied box, select another one\n"
+      validate_input("row ")
+      validate_input("column ")
     end
   end
   
   def check_winner
     if $is_there_winner
-      print "FIN DEL JUEGO HAY UN GANADOR \n"
-      print "Felicidades jugador #{@checking_player }\n"
+      print "END OF GAME THERE IS A WINNER \n"
+      print "Congratulations player #{@checking_player }\n"
     end
   end
 
@@ -172,7 +172,7 @@ class Console_Output
   end
 
   def make_user_movement
-    print "Jugador #{@player} digite el numero de la casilla a marcar\n"
+    print "PLayer #{@player} digit the number of the box in which you wanna move\n"
     validate_data
     @board[$row][$column] = "X"
     @player = $second_player
@@ -186,7 +186,7 @@ class Console_Output
   end
 
   def continue_playing
-    print "Movida de la computadora \n"
+    print "Computer's move \n"
     $computer_logic_instance = Computer_logic.new()
     result = Array.new()
     result = $computer_logic_instance.start_computer_move(@board,$number_occupied_boxes)
