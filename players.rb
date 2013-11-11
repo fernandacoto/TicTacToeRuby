@@ -33,7 +33,7 @@ class Players
   def play(player)
     @display.print_message("Player #{player} digit the number of the box in which you wanna move\n")
     row_column = check_availability(which_cell?)
-    @winner = @board.make_movement(cell,player)
+    @winner = @board.make_movement(row_column,player)
   end
 
   def which_cell?
