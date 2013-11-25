@@ -41,15 +41,6 @@ class Computer_logic
   def check_diagonals(board, player_symbol)
   end
 
-  def same_symbol(cell_one,cell_two, symbol)
-    if cell_one == symbol and cell_two == symbol
-      true
-    else
-      false
-    end
-    print "in same symbol"
-  end
-
   def check_rows(board,player)
     case 2
     when can_win?(0,0,player)
