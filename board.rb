@@ -25,5 +25,9 @@ class Board
     @display.paint_board(@board)
     @check_for_winner.is_there_winner(which_player(player),@board)
   end
+
+  def return_board
+   @board
+  end
   
 end

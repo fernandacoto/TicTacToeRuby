@@ -1,15 +1,53 @@
 class Computer_logic
-  Computer_moves = []
-  User_moves = []
   def initialize
     @move = []
+    @Computer_moves = []
+    @User_moves = []
   end
 
   def computer_can_win?(board)
-    check_rows(board, Computer_moves)
+    @move = []
+    get_options(board)
+    check_rows(board,@Computer_moves)
     if @move.empty?
-      check_columns(board,Computer_moves)
+      check_columns(board,@Computer_moves)
+      user_can_win?(board)
+      #check_diagonals(board,"X")
     end
+    random(board) if @move.empty?
+    return @move
+  end
+
+  def random(board)
+    @move = [1,2]
+  end
+
+  def get_options(board)
+    check_options(board,0,"O",@Computer_moves)
+    check_options(board,1,"O",@Computer_moves)
+    check_options(board,2,"O",@Computer_moves)
+  end
+
+  def user_can_win?(board)
+    @move = []
+    check_rows(board,@User_moves)
+    if @move.empty?
+      check_columns(board,@User_moves)
+      check_diagonals(board,"O")
+    end
+    return @move
+  end
+
+  def check_diagonals(board, player_symbol)
+  end
+
+  def same_symbol(cell_one,cell_two, symbol)
+    if cell_one == symbol and cell_two == symbol
+      true
+    else
+      false
+    end
+    print "in same symbol"
   end
 
   def check_rows(board,player)
@@ -64,5 +102,28 @@ class Computer_logic
       counter += 1 if player[index][row_column].eql? element
     end
     counter
+  end
+  
+  def random_move(board)
+    if board[1][1].eql? " "
+      cell = [1,1]
+    else
+      cell = find_empty_cell(board)
+    end
+  end
+
+  def find_empty_cell(board)
+    [2,0]
+  end
+
+  def block_user(board)
+    check_options(board,0,"X",@User_moves)
+    check_options(board,1,"X",@User_moves)
+    check_options(board,2,"X",@User_moves)
+    user_can_win?(board)
+    if @move.empty?
+      computer_can_win?(board)
+    end
+    return @move
   end
 end
