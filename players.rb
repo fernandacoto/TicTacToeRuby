@@ -69,9 +69,6 @@ class Players
   end
 
   def make_movement(cell,player)
-     print "Movement"
-     print cell
-     print "\n"
      @winner = @board.make_movement(cell,player)
   end
 
