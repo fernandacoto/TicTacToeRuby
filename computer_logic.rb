@@ -11,10 +11,10 @@ class Computer_logic
     check_rows(board,@Computer_moves)
     if @move.empty?
       check_columns(board,@Computer_moves)
-      user_can_win?(board)
-      #check_diagonals(board,"X")
+      check_diagonals(board,"X")
     end
-    random(board) if @move.empty?
+    user_can_win?(board) if @move.empty?
+    random_move(board) if @move.empty?
     return @move
   end
 
@@ -39,6 +39,15 @@ class Computer_logic
   end
 
   def check_diagonals(board, player_symbol)
+  end
+
+  def same_symbol(cell_one,cell_two, symbol)
+    if cell_one == symbol and cell_two == symbol
+      true
+    else
+      false
+    end
+    print "in same symbol"
   end
 
   def check_rows(board,player)
@@ -116,5 +125,20 @@ class Computer_logic
       computer_can_win?(board)
     end
     return @move
+  end
+
+  def check_diagonals(board, player_symbol)
+    if board[1][1].eql? player_symbol
+      compare_boxes(board,0,0,2,2,player_symbol)
+      compare_boxes(board,0,2,2,0,player_symbol)
+    end
+  end
+  
+  def compare_boxes(board,row_1,column_1,row_2,column_2,player_symbol)
+      if board[row_1][column_1].eql? player_symbol and board[row_2][column_2].eql?" "
+        @move = [row_2,column_2]
+      elsif board[row_1][column_1].eql?" " and board[row_2][column_2].eql? player_symbol
+        @move = [row_1,column_1]
+      end
   end
 end
