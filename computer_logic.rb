@@ -9,15 +9,11 @@ class Computer_logic
     @move = []
     get_options(board)
     check_rows(board,@Computer_moves)
-    print "Move before if call #{@move}\n"
     if @move.empty?
       check_columns(board,@Computer_moves)
-      print "Move into if call #{@move}\n"
       check_diagonals(board,"X")
     end
-    print "Move before user can win call #{@move}\n"
     user_can_win?(board) if @move.empty?
-    print "Move before random move call #{@move}\n"
     random_move(board) if @move.empty?
     return @move
   end
@@ -35,7 +31,6 @@ class Computer_logic
       check_columns(board,@User_moves)
       check_diagonals(board,"O")
     end
-    print "User can win #{@move}\n"
     return @move
   end
 
@@ -79,7 +74,6 @@ class Computer_logic
 
   def check_options(board, row, player_symbol, player)
     column = 0
-    print "Player symbol #{player_symbol}"
     3.times do 
       player<< [row,column] if board[row][column].eql? player_symbol
       column += 1
@@ -90,7 +84,6 @@ class Computer_logic
     counter = 0
     player.each_index do |index|
       counter += 1 if player[index][row_column].eql? element
-      print "can win #{element} -- #{counter}\n"
     end
     counter
   end
@@ -106,9 +99,8 @@ class Computer_logic
   def find_empty_cell(board)
     random = Random.new
     row = random.rand(0..2)
-    print "Row #{row}"
     column = random.rand(0..2)
-    print "Column #{column} \n"
+
     while board[row][column] != " "
       row = random.rand(0..2)
       column = random.rand(0..2)
