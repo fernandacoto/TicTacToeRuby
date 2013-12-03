@@ -125,6 +125,7 @@ class Computer_logic
       compare_boxes(board,0,0,2,2,player_symbol)
       compare_boxes(board,0,2,2,0,player_symbol)
     end
+    @move
   end
   
   def compare_boxes(board,row_1,column_1,row_2,column_2,player_symbol)

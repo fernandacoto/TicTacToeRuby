@@ -11,11 +11,19 @@ describe Computer_logic do
     end
   end
 
-  describe "get an emtpy box" do
-    it "returns an empty box where the computer need a random move" do
+  describe "get an empty box" do
+    it "returns an empty box when the computer need a random move" do
       board =[["X"," ","O"],["X","O"," "],[" "," "," "]]
       box = @computer_logic.random_move(board)
       expect(box.length).to eq(2)
+    end
+  end
+
+  describe "get a box when someone can win by a digonal" do
+    it "returns the box in wich the computer can win or can block to the other player" do
+      board = [["O"," "," "],["X","O","X"],[" "," "," "]]
+      box = @computer_logic.check_diagonals(board,"O")
+      expect(box).to eq([2,2])
     end
   end
 end
